@@ -18,6 +18,7 @@ export default function RoverCommand() {
           </div>
         </div>
         <div className="flex items-center gap-2 text-[11px]">
+          <a href="/" className="bg-white text-black px-4 py-2 rounded-full font-bold hover:bg-gray-200">← Back to Home</a>
           <span className="text-green-400">● SECURE</span>
           <span className="bg-gray-700 px-2 py-0.5 rounded">v2.1.3</span>
         </div>
@@ -30,25 +31,15 @@ export default function RoverCommand() {
             <h2 className="text-cyan-300 font-bold text-xs">— LIVE PI CAMERA FEED — YOLOv8 DETECTION</h2>
             <span className="text-green-400 text-[11px]">● LIVE • 30 FPS</span>
           </div>
-
           <div className="relative bg-black">
-            {/* DEMO IMAGE - Same as your screenshot reference */}
-            <img
-              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900"
-              alt="disaster"
-              className="w-full h-[520px] object-cover opacity-80"
-            />
-            {/* Yellow Detection Box */}
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900" alt="disaster" className="w-full h-[520px] object-cover opacity-80" />
             <div className="absolute top-[18%] left-[15%] w-[55%] h-[62%] border-2 border-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.6)]">
               <div className="absolute -top-5 left-0 bg-yellow-400 text-black font-black px-2 text-[13px]">PERSON DETECTED 98%</div>
             </div>
-            {/* Bottom info */}
             <div className="absolute bottom-10 left-2 right-2 flex justify-between text-[10px] text-green-300 bg-black/70 px-2 py-1">
               <span>OBJECT: person | CONF: 0.98 | CLASS: human | DIST: ~4.2 m</span>
             </div>
-            {/* When connected to real Pi, uncomment this line:
-            {connected && <img src={`${piUrl}/video_feed`} className="absolute inset-0 w-full h-full object-cover" />}
-            */}
+            {connected && <img src={`${piUrl}/video_feed`} alt="Pi Live" className="absolute inset-0 w-full h-full object-cover" />}
           </div>
           <div className="px-3 py-2 bg-black/50 text-[10px] text-gray-400">Timestamp: 2024-11-21 22:14:37 UTC | Camera: pi-cam-001 | Exposure: auto</div>
         </div>
@@ -57,7 +48,6 @@ export default function RoverCommand() {
         <div className="lg:col-span-2 bg-[#0f253d] border border-cyan-800/50 rounded-xl p-3">
           <h2 className="text-cyan-300 font-bold text-xs text-center">◉ SENSOR DASHBOARD & ROVER CONTROLS</h2>
           <p className="text-center text-[10px] text-gray-400 mt-1 mb-3">ENVIRONMENT & VITAL SENSORS</p>
-
           <div className="grid grid-cols-3 gap-2">
             {[
               {icon:"🌡️", label:"TEMPERATURE", val:"32.4°C", sub:"Ambient • Nominal"},
@@ -75,14 +65,13 @@ export default function RoverCommand() {
               </div>
             ))}
           </div>
-
           <h3 className="text-center text-cyan-300 text-xs mt-4 mb-2">ROVER CONTROLS</h3>
           <div className="flex flex-col items-center gap-2">
-            <button className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg font-bold text-xs">↑ FORWARD</button>
+            <button onClick={()=>connected && fetch(`${piUrl}/control/forward`).catch(()=>{})} className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg font-bold text-xs">↑ FORWARD</button>
             <div className="flex gap-2">
-              <button className="border border-cyan-400/50 px-4 py-2 rounded-lg text-xs">← LEFT</button>
-              <button className="bg-red-600 px-5 py-2 rounded-lg font-bold text-xs">◫ STOP</button>
-              <button className="border border-cyan-400/50 px-4 py-2 rounded-lg text-xs">RIGHT →</button>
+              <button onClick={()=>connected && fetch(`${piUrl}/control/left`).catch(()=>{})} className="border border-cyan-400/50 px-4 py-2 rounded-lg text-xs">← LEFT</button>
+              <button onClick={()=>connected && fetch(`${piUrl}/control/stop`).catch(()=>{})} className="bg-red-600 px-5 py-2 rounded-lg font-bold text-xs">◫ STOP</button>
+              <button onClick={()=>connected && fetch(`${piUrl}/control/right`).catch(()=>{})} className="border border-cyan-400/50 px-4 py-2 rounded-lg text-xs">RIGHT →</button>
             </div>
             <div className="w-full mt-2">
               <div className="flex items-center gap-2 text-[11px]"><span>SPEED: 45%</span><div className="flex-1 bg-gray-700 h-1 rounded"><div className="bg-cyan-400 h-1 w-[45%] rounded"></div></div></div>
@@ -95,7 +84,6 @@ export default function RoverCommand() {
         </div>
       </div>
 
-      {/* FOOTER */}
       <div className="mx-3 mb-3 bg-[#0d2136] border border-cyan-700/50 rounded-lg px-4 py-2 flex flex-wrap justify-between text-[11px]">
         <div className="flex gap-3 text-gray-400">
           <span className="text-green-400">● Rover BOT online</span>
