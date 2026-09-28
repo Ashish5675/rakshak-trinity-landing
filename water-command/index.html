@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAKSHAK - Water Command Center</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>body{font-family:'JetBrains Mono'}.orbit{font-family:'Orbitron'}</style>
+</head>
+<body class="bg-[#0a1a2a] text-white min-h-screen">
+<div class="bg-[#0d2136] border-b border-blue-900 px-4 py-3 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <h1 class="text-xl font-black text-blue-400 leading-none orbit">RAKSHAK<br><span class="text-[10px] text-gray-400 font-normal">WATER BOAT COMMAND • JHARIA FLOOD</span></h1>
+    <div class="ml-4 flex items-center gap-2">
+      <span class="text-xs text-gray-300">Boat ESP URL:</span>
+      <input id="piUrl" value="http://192.168.4.1:5000" class="bg-black/60 border border-gray-600 rounded-lg px-3 py-1.5 w-[220px] text-blue-300 text-xs" />
+      <button onclick="connectPi()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-bold text-xs">↗ Connect Boat</button>
+    </div>
+  </div>
+  <div class="flex items-center gap-2 text-[11px] flex-wrap">
+    <a href="/" class="bg-white text-black px-4 py-2 rounded-full font-bold">← HOME</a>
+    <a href="/rover-command" class="bg-red-600 text-white px-4 py-2 rounded-full font-bold">🚁 ROVER</a>
+    <a href="/architecture" class="bg-cyan-500 text-black px-4 py-2 rounded-full font-bold">🧠 ARCH</a>
+    <span class="text-blue-400">● FLOATING</span>
+  </div>
+</div>
+
+<div class="p-3 grid lg:grid-cols-5 gap-3">
+  <div class="lg:col-span-3 bg-[#0f253d] border border-blue-800/50 rounded-xl overflow-hidden">
+    <div class="flex justify-between items-center px-4 py-2 bg-black/20">
+      <h2 class="text-blue-300 font-bold text-xs">— LIVE BOAT CAM — WATER QUALITY + RESCUE VIEW</h2>
+      <span class="text-green-400 text-[11px]">● LIVE • IP67 WATERPROOF • DEPTH SONAR</span>
+    </div>
+    <div class="relative bg-black">
+      <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=900" class="w-full h-[520px] object-cover opacity-80">
+      <div class="absolute bottom-12 left-4 bg-black/70 border border-blue-400 px-3 py-2 rounded text-[10px]">
+        <div class="text-blue-300 font-bold">WATER ANALYSIS</div>
+        <div>pH: 6.8 (Safe) | Turbidity: 12 NTU</div>
+        <div>Temp: 28.2°C | Depth: 1.4m</div>
+      </div>
+      <div class="absolute bottom-2 left-2 right-2 text-[10px] text-blue-300 bg-black/70 px-2 py-1 flex justify-between"><span>BOAT: PVC + Foam Float • Pump Active</span><span>GPS: 23.79N 86.41E • Water Logged Mine</span></div>
+    </div>
+    <div class="px-3 py-2 bg-black/50 text-[10px] text-gray-400 flex justify-between"><span>Payload: Medicine/FOOD Drop • Waterproof Box 200x150</span><span>DS18B20 + pH + Turbidity → ESP32 → Pi</span></div>
+  </div>
+
+  <div class="lg:col-span-2 bg-[#0f253d] border border-blue-800/50 rounded-xl p-3">
+    <h2 class="text-blue-300 font-bold text-xs text-center">◉ WATER QUALITY & BOAT CONTROLS</h2>
+    <div class="grid grid-cols-3 gap-2 mt-3">
+      <div class="bg-black/40 border border-blue-700/50 rounded-lg p-2 text-center"><div>💧</div><div class="text-[8px] text-gray-400">WATER pH</div><div class="text-[13px] font-bold text-green-300">6.8</div><div class="text-[7px] text-green-400">Safe 6.5-8.5</div></div>
+      <div class="bg-black/40 border border-gray-700/50 rounded-lg p-2 text-center"><div>🌫️</div><div class="text-[8px] text-gray-400">TURBIDITY</div><div class="text-[13px] font-bold text-yellow-300">12 NTU</div></div>
+      <div class="bg-black/40 border border-gray-700/50 rounded-lg p-2 text-center"><div>🌡️</div><div class="text-[8px] text-gray-400">WATER TEMP</div><div class="text-[13px] font-bold text-blue-300">28.2°C</div></div>
+      <div class="bg-black/40 border border-gray-700/50 rounded-lg p-2 text-center"><div>📏</div><div class="text-[8px] text-gray-400">DEPTH</div><div class="text-[13px] font-bold text-cyan-300">1.4 m</div></div>
+      <div class="bg-black/40 border border-gray-700/50 rounded-lg p-2 text-center"><div>🛰️</div><div class="text-[8px] text-gray-400">GPS</div><div class="text-[9px] font-bold text-blue-300">23.79N 86.41E</div></div>
+      <div class="bg-black/40 border border-gray-700/50 rounded-lg p-2 text-center"><div>⚓</div><div class="text-[8px] text-gray-400">PAYLOAD</div><div class="text-[11px] font-bold text-white">READY</div></div>
+    </div>
+
+    <h3 class="text-center text-blue-300 text-xs mt-4 mb-2">WATER BOAT CONTROLS</h3>
+    <div class="flex flex-col items-center gap-2">
+      <button onclick="control('forward')" class="bg-blue-600 px-6 py-2 rounded-lg font-bold text-xs w-full">↑ FORWARD (Water Propulsion)</button>
+      <div class="flex gap-2 w-full">
+        <button onclick="control('left')" class="flex-1 border border-blue-400/50 py-2 rounded-lg text-xs">← LEFT</button>
+        <button onclick="control('stop')" class="flex-1 bg-red-600 py-2 rounded-lg font-bold text-xs">◫ STOP</button>
+        <button onclick="control('right')" class="flex-1 border border-blue-400/50 py-2 rounded-lg text-xs">RIGHT →</button>
+      </div>
+      <div class="grid grid-cols-2 gap-2 mt-2 w-full text-[10px]">
+        <button class="bg-green-700 py-2 rounded font-bold">💧 SAMPLE WATER (Pump)</button>
+        <button class="border border-green-600 py-2 rounded text-green-300">📦 DROP PAYLOAD</button>
+        <button class="border border-cyan-600 py-2 rounded text-cyan-300">🧭 AUTO NAV to GPS</button>
+        <button class="border border-red-900 bg-red-900/20 py-2 rounded text-red-300">⚠️ RETURN TO SHORE</button>
+      </div>
+    </div>
+    <div class="mt-3 bg-black/60 p-2 rounded text-[9px] text-gray-400">
+      <b class="text-blue-300">Wiring:</b> BO Motor (Waterproof) x2 → L298N → ESP32 GPIO 18,19 • DS18B20 GPIO4 • pH A0 • Turbidity A1 → MCP3008 → Pi • Pump Relay GPIO23
+    </div>
+  </div>
+</div>
+
+<div class="mx-3 mb-3 bg-[#0d2136] border border-blue-700/50 rounded-lg px-4 py-2 flex justify-between text-[11px] text-gray-400">
+  <div><span class="text-blue-400">● Water Boat floating • Sampling Ready</span> | Mission: Jharia Flood Rescue</div>
+  <div id="connInfo" class="text-blue-300">CONNECTED TO: ESP32 Boat Mesh • LoRa Backup</div>
+</div>
+
+<script>
+function connectPi(){
+  const url=document.getElementById('piUrl').value;
+  document.getElementById('connInfo').innerText='CONNECTED TO: '+url;
+}
+function control(cmd){ alert('Demo Boat: '+cmd+' → ESP32 Boat will move via waterproof BO motors'); }
+</script>
+</body>
+</html>
