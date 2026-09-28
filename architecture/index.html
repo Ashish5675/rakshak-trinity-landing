@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAKSHAK AI TRINITY - Architecture</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body{font-family:'JetBrains Mono'; background:#020617}
+.orbit{font-family:'Orbitron'}
+.glow-cyan{box-shadow:0 0 20px rgba(6,182,212,0.4), inset 0 0 20px rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.6)}
+.glow-purple{box-shadow:0 0 20px rgba(168,85,247,0.4), inset 0 0 20px rgba(168,85,247,0.1); border:1px solid rgba(168,85,247,0.6)}
+.glow-blue{box-shadow:0 0 20px rgba(59,130,246,0.4); border:1px solid rgba(59,130,246,0.6)}
+</style>
+</head>
+<body class="text-white min-h-screen p-2 md:p-4 bg-[radial-gradient(circle_at_center,_#0f172a_0%,_#020617_100%)]">
+
+<!-- HEADER -->
+<div class="flex justify-between items-center mb-4 px-2">
+  <a href="/" class="bg-white text-black px-6 py-2 rounded-full font-black text-xs hover:bg-gray-200">← HOME PAGE</a>
+  <div class="text-center">
+    <h1 class="orbit text-2xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400 tracking-wider">RAKSHAK AI TRINITY</h1>
+    <p class="text-purple-400 text-[11px] md:text-sm mt-1">Tri-Domain AI Guardian • IIT HYDERABAD INCUBATOR QUALITY</p>
+  </div>
+  <a href="/rover-command/" class="bg-red-600 text-white px-6 py-2 rounded-full font-black text-xs">🚁 LIVE COMMAND →</a>
+</div>
+
+<!-- MAIN GRID - Like your image -->
+<div class="grid lg:grid-cols-12 gap-4 max-w-[1600px] mx-auto">
+
+  <!-- LEFT: LAND ROVER -->
+  <div class="lg:col-span-3 glow-cyan rounded-2xl p-4 bg-[#0a1025]/80 backdrop-blur relative">
+    <h2 class="orbit text-cyan-300 text-xl font-black mb-3">1. LAND ROVER</h2>
+    <img src="/rover.jpg" onerror="this.src='https://i.imgur.com/8QJ4sQO.png'" class="w-full h-40 object-contain bg-black/50 rounded-xl mb-3">
+    <ul class="text-[11px] space-y-1.5 text-cyan-200">
+      <li>• <b>MQ7 CO sensor • 20-2000ppm</b> → GPIO A0 via MCP3008</li>
+      <li>• <b>SW-420 Vibration Sensor</b> → GPIO 17 - Subsidence detection</li>
+      <li>• <b>HC-SR501 PIR + Human Detection</b> → GPIO 27 - YOLOv8 confirm</li>
+      <li>• <b>Pi Camera NoIR • Night Vision</b> → CSI Port + /video_feed</li>
+      <li>• <b>6x BO Motor + L298N x3</b> → GPIO 18,19,20,21,22,23</li>
+      <li>• <b>NEO-6M GPS</b> → UART TX 14 RX 15</li>
+    </ul>
+    <div class="mt-3 bg-black/60 rounded-full px-3 py-1 text-[9px] text-center text-gray-400 border border-cyan-500/20">Autonomous Ground Patrol • Obstacle Avoidance • 500x350mm Base</div>
+    <div class="hidden lg:block absolute -right-6 top-1/2 w-6 h-[2px] bg-purple-500 shadow-[0_0_10px_#a855f7]"></div>
+  </div>
+
+  <!-- CENTER: COMMAND & CONTROL -->
+  <div class="lg:col-span-5 space-y-4">
+    <!-- Pi Brain -->
+    <div class="glow-purple rounded-2xl p-4 bg-[#12102a]/80 text-center">
+      <div class="text-4xl">🔷</div>
+      <h3 class="text-purple-300 font-bold text-sm">Raspberry Pi 4</h3>
+      <p class="text-[10px] text-gray-400">Brain • ESP8266 WiFi Module • ESP32 Mesh • LoRa 433MHz</p>
+      <div class="mt-2 grid grid-cols-3 gap-2 text-[8px]">
+        <div class="bg-black/50 p-2 rounded">Pi 4: I2C, SPI, UART, GPIO</div>
+        <div class="bg-black/50 p-2 rounded">ESP32: ESP-NOW Mesh Node</div>
+        <div class="bg-black/50 p-2 rounded">ESP8266: Cloud Link</div>
+      </div>
+    </div>
+
+    <!-- Central Command -->
+    <div class="glow-blue rounded-2xl p-5 bg-[#0a1930]/90 text-center border-2 border-blue-400">
+      <h2 class="orbit text-blue-300 text-lg font-black">CENTRAL COMMAND & CONTROL</h2>
+      <div class="grid grid-cols-3 gap-3 mt-4">
+        <div><div class="text-2xl">📡</div><p class="text-[10px] font-bold text-purple-300">MQTT Protocol</p><p class="text-[8px] text-gray-400">Mosquitto Broker on Pi</p></div>
+        <div><div class="text-2xl">🌐</div><p class="text-[10px] font-bold text-cyan-300">Web Dashboard</p><p class="text-[8px] text-gray-400">Vercel + Render Live</p></div>
+        <div><div class="text-2xl">🗺️</div><p class="text-[10px] font-bold text-green-300">Leaflet Map</p><p class="text-[8px] text-gray-400">ISRO Bhuvan API Overlay</p></div>
+      </div>
+      <div class="mt-4 bg-black/60 rounded-full px-3 py-1 text-[9px] text-cyan-300 border border-cyan-500/30">Real-time Telemetry • Secure Data Relay • REST API • Flask /api/detect</div>
+
+      <!-- Wiring Details -->
+      <div class="mt-4 text-left bg-black/70 rounded-xl p-3 text-[9px] leading-4 font-mono text-gray-300">
+        <span class="text-green-400">Live Wiring:</span><br>
+        Pi GPIO18 → L298N IN1/IN2 (Left Front+Mid)<br>
+        Pi GPIO19 → L298N IN3/IN4 (Right Front+Mid)<br>
+        Pi GPIO20 → L298N IN1/IN2 (Rear Motors)<br>
+        Pi GPIO23 → Linear Actuator Relay 200mm Lift<br>
+        Pi I2C SDA/SCL → MPU6050 + BMP280<br>
+        Pi SPI → MCP3008 CH0=MQ7 CH1=MQ2 CH2=MQ135<br>
+        Pi UART → NEO-6M GPS + ESP32 Mesh
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <div class="glow-purple rounded-xl p-3 bg-[#151030]/80">
+        <h4 class="text-[11px] font-bold text-purple-300">Cloud/Offline Hybrid</h4>
+        <p class="text-[9px] text-gray-400 mt-1">📁 Offline SD Logging → /home/pi/data.csv<br>🔋 Solar Compatible → LM2596 Buck + Solar Panel 12V</p>
+      </div>
+      <div class="glow-cyan rounded-xl p-3 bg-[#0a1a20]/80">
+        <h4 class="text-[11px] font-bold text-cyan-300">AI Pipeline</h4>
+        <p class="text-[9px] text-gray-400 mt-1">YOLOv8n.pt 640x480 → 42ms inference<br>GitHub → Render → Vercel Edge → Live Dashboard</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: DRONE + WATER -->
+  <div class="lg:col-span-4 space-y-4">
+    <div class="glow-purple rounded-2xl p-4 bg-[#1a102a]/80">
+      <h2 class="orbit text-purple-400 text-xl font-black">2. AIR DRONE</h2>
+      <div class="flex gap-3 mt-2">
+        <img src="https://i.imgur.com/L8N7T0s.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3113/3113774.png'" class="w-24 h-20 object-contain">
+        <ul class="text-[10px] space-y-1 text-purple-200">
+          <li>• <b>YOLOv8 • Human Detection</b> - Aerial view</li>
+          <li>• <b>Dual Confirmation: PIR + Vision</b></li>
+          <li>• <b>80% Battery Save Mode</b> - ESP32 sleep</li>
+          <li>• <b>Aerial Rescue View • Live Feed</b> via 5.8GHz VTX</li>
+          <li>• ESP32 → GPS coords to Rover Mesh</li>
+        </ul>
+      </div>
+      <div class="mt-2 bg-black/60 rounded-full px-3 py-1 text-[8px] text-center">Rapid Aerial Recon • Emergency Drop Assist • DJI Tello / F450</div>
+    </div>
+
+    <div class="glow-cyan rounded-2xl p-4 bg-[#0a1a2a]/80">
+      <h2 class="orbit text-cyan-300 text-xl font-black">3. WATER BOAT</h2>
+      <div class="flex gap-3 mt-2">
+        <img src="https://i.imgur.com/5Xy4q.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3069/3069178.png'" class="w-24 h-20 object-contain">
+        <ul class="text-[10px] space-y-1 text-cyan-200">
+          <li>• <b>Water Level Sensor • Depth Monitoring</b></li>
+          <li>• <b>Payload Delivery System</b> - Medicine/food drop</li>
+          <li>• <b>Flood Rescue • Flotation Ready</b> - Foam + PVC</li>
+          <li>• <b>Joystick Control • Manual/Auto</b> via Pi</li>
+          <li>• DS18B20 + pH + Turbidity → Pi I2C</li>
+        </ul>
+      </div>
+      <div class="mt-2 bg-black/60 rounded-full px-3 py-1 text-[8px] text-center">Water Navigation • Survivor Rescue • Waterproof Box IP67</div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM STATS BAR - Like your image -->
+<div class="grid md:grid-cols-4 gap-3 mt-6 max-w-[1600px] mx-auto">
+  <div class="glow-cyan rounded-xl p-3 flex gap-3 items-center bg-[#0a1a2a]/80"><div class="text-2xl">₹</div><div><p class="font-black text-cyan-300 text-sm">Cost: Rs 35k vs Rs 15L</p><p class="text-[9px] text-gray-400">97% Cost Saving vs Commercial Systems • BOM Rs 11k Base</p></div></div>
+  <div class="glow-purple rounded-xl p-3 flex gap-3 items-center bg-[#1a1020]/80"><div class="text-2xl">⚠️</div><div><p class="font-black text-yellow-300 text-sm">CO >50ppm → Auto-Return</p><p class="text-[9px] text-gray-400">Triggers emergency RTB protocol • MQ7 threshold + Buzzer</p></div></div>
+  <div class="glow-blue rounded-xl p-3 flex gap-3 items-center bg-[#0a1025]/80"><div class="text-2xl">🛡️</div><div><p class="font-black text-green-300 text-sm">70% False Alarm Reduction</p><p class="text-[9px] text-gray-400">AI Fusion Filtering • PIR + YOLOv8 + Vibration SW-420</p></div></div>
+  <div class="glow-cyan rounded-xl p-3 flex gap-3 items-center bg-[#0a1a20]/80"><div class="text-2xl">☀️</div><div><p class="font-black text-cyan-300 text-sm">Solar Compatible • Offline SD Logging</p><p class="text-[9px] text-gray-400">24/7 Operation • Data Resilience • Solar Panel 12V 20W</p></div></div>
+</div>
+
+<div class="text-center mt-4 text-[9px] text-gray-600 flex justify-between max-w-[1600px] mx-auto px-2">
+  <span>IIT Hyderabad - Incubator | Prototype v1.0 | 2024 | SIH26025 Ministry of Coal</span>
+  <span>Edge AI • IoT Mesh Network • Scalable • Low Power Design • Team Reborn Innovators</span>
+</div>
+
+</body>
+</html>
